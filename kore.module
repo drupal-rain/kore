@@ -1,0 +1,11 @@
+<?php
+
+/**
+ *  Implements hook_preprocess().
+ */
+function kore_preprocess(&$vars, $hook) {
+  // Add node type specific template.
+  if ($hook == 'page' && isset($vars['node'])) {
+    $vars['theme_hook_suggestions'][] = 'page__node__' . $vars['node']->type;
+  }
+}
