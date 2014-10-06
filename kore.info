@@ -2,5 +2,5 @@ name = Kore
 description = Keatures core.
 core = 7.x
 package = Keatures
-version = 7.x-0.2
+version = 7.x-0.3
 project = kcore
