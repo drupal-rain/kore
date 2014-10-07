@@ -1,4 +1,6 @@
 <?php
 
+include_once 'kpane.features.inc';
+
 include_once 'kore.form.inc';
 include_once 'kore.theme.inc';
