@@ -6,25 +6,29 @@
 function kore_theme($existing, $type, $theme, $path) {
   $path = drupal_get_path('module', 'kore');
 
-  $kitems = kitem_plugin_get_plugins();
-  $kitems_registry = array();
-  foreach ($kitems as $id => $plugin) {
-    $kitems_registry['kitem__' . $id] = array(
-      'base hook' => 'kitem',
-      'path' => $plugin['path'],
-      'template' => $id,
-    );
-  }
+  // Register Kitem theme hooks.
+  $kitems_registry = kitem_theme_registry($existing, $type, $theme, $path);
 
   return $kitems_registry + array(
     'kitem' => array(
       'variables' => array(
         'type' => 'default',
-        'item' => array(),
+        'subtype' => NULL,
+        'item' => array(), // @todo Change to object and add handler class feature to plugin.
         'settings' => array(),
       ),
       'file' => 'theme/kitem.inc',
       'template' => 'theme/kitem',
+    ),
+    'klist' => array(
+      'variables' => array(
+        'type' => 'default', // Unformatted list
+        'subtype' => NULL,
+        'items' => array(),
+        'settings' => array(),
+      ),
+      'file' => 'theme/klist.inc',
+      'template' => 'theme/klist',
     ),
     'kore_image' => array(
       'variables' => array(
@@ -65,7 +69,7 @@ function kore_theme($existing, $type, $theme, $path) {
         'settings' => array(),
       ),
       'file' => 'theme/kore_thumbnail.inc',
-      'template' => 'theme/kore_thumbnail', // @todo Transfer to theme function, Again!
+      'template' => 'theme/kore_thumbnail', // @todo Transfer to theme function, Again???
     ),
     'kore_carousel' => array(
       'variables' => array(
@@ -79,7 +83,7 @@ function kore_theme($existing, $type, $theme, $path) {
 }
 
 // =============================================================================
-// Alter
+// Theme Registry
 
 /**
  *  Implements hook_preprocess().
@@ -112,5 +116,3 @@ function kore_attributes_process(&$vars, $attributes) {
     }
   }
 }
-
-

@@ -7,23 +7,28 @@ function theme_kore_carousel($vars) {
 
 
   $settings_group = array(
-    'instance' => 'owlcarousel_settings_kpane-single',
+    'instance' => $settings['owlcarousel'],
     'attributes' => array(
       'id' => array(
-        'default' => drupal_html_id('owlcarousel_posts')
+        'default' => drupal_html_id($settings['id']),
       ),
     ),
   );
 
+  $item_theme = 'kitem';
+  if ($settings['kitem'] != 'default') {
+    $item_theme .= '__' . $settings['kitem'];
+  }
+
   $items_group = array();
   foreach ($items as $item) {
     $variables = array(
-      'type' => 'thumbnail',
+      'type' => $settings['kitem'],
       'item' => $item,
       'settings' => $settings,
     );
 
-    $items_group[]['row'] = theme('kitem__thumbnail', $variables);
+    $items_group[]['row'] = theme($item_theme, $variables);
   }
 
   $element = NULL;

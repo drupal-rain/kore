@@ -6,6 +6,10 @@
 function template_preprocess_kitem(&$vars) {
   // Initiate Defaults
   kitem_initiate($vars);
+
+  // Plugin
+  _kitem_plugin_callback($vars, 'preprocess');
+
 }
 
 // $image
@@ -14,6 +18,29 @@ function template_preprocess_kitem(&$vars) {
 function template_process_kitem(&$vars) {
   // Run through to generate standard variables: $image, $title, $body.
   kitem_process($vars);
+
+  // Plugin
+  _kitem_plugin_callback($vars, 'process');
+
+}
+
+// =============================================================================
+// Helper
+
+function _kitem_plugin_callback(&$vars, $callback) {
+  // Plugin
+  if (isset($vars['type']) && $vars['type'] != 'default') {
+    $function = kitem_plugin_get_function($vars['type'], $callback);
+    if ($function) {
+      $function($vars);
+    }
+    if (!empty($vars['subtype'])) {
+      $function = kitem_plugin_get_subtype_function($vars['type'], $vars['subtype'], $callback);
+      if ($function) {
+        $function($vars);
+      }
+    }
+  }
 }
 
 // =============================================================================

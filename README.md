@@ -32,9 +32,7 @@ Form
     - kore_form_submit_redirect(), use 'redirect_kore' to redirect after form being submitted.
     - kore_form_submit_redirect_up(), just redirect to upper directory.
 
-Breakpoints in Theme (Bootstrap)
-================================
-    breakpoints[lg] = (min-width: 1200px)
-    breakpoints[md] = (min-width: 992px)
-    breakpoints[sm] = (min-width: 768px)
-    breakpoints[xs] = (min-width: 0px) and (max-width: 767px)
+Kitem
+=====
+Plugins for theme_registry kitem.
+Support subtypes.

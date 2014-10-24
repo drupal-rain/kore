@@ -24,11 +24,11 @@ function theme_kore_media($vars) {
 
   foreach ($items as $item) {
     $variables = array(
-      'type' => 'media_test',
+      'type' => 'media',
       'item' => $item,
       'settings' => $settings,
     );
-    $output .= theme('kitem__media_test', $variables);
+    $output .= kitem_theme($variables);
   }
 
   $output .= '</ul>';

@@ -1,6 +1,11 @@
 <?php
 
-$plugin = array();
+$plugin = array(
+  'label' => t('Thumbnail'),
+  'subtypes' => array(
+    'hovercard' => array(), // @todo Design subtype info.
+  ),
+);
 
 function kore_kitem_thumbnail_preprocess(&$vars) {
   $item = &$vars['item'];
@@ -19,4 +24,8 @@ function kore_kitem_thumbnail_preprocess(&$vars) {
   foreach ($settings['grid'] as $size => $grid) {
     $vars['classes_array'][] = 'col-' . $size . '-' . floor(KALATHEME_GRID_SIZE / $grid);
   }
+}
+
+function kore_kitem_thumbnail_hovercard_preprocess(&$vars) {
+
 }

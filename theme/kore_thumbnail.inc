@@ -25,7 +25,7 @@ function template_process_kore_thumbnail(&$vars) {
       'item' => $item,
       'settings' => $settings,
     );
-    $item_output = theme('kitem__thumbnail', $variables);
+    $item_output = kitem_theme($variables);
     $vars['items_output'][] = $item_output;
   }
 }

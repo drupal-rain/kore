@@ -6,6 +6,7 @@ include_once 'kore.form.inc';
 include_once 'kore.theme.inc';
 
 include_once 'kore.kitem.inc';
+include_once 'kore.klist.inc';
 
 /**
  * Wrapper for ctools_include().
@@ -21,6 +22,9 @@ function kore_ctools_plugin_type() {
   return array(
     'kitem' => array(
       'load themes' => TRUE,
+      'defaults' => array(
+        'subtypes' => array(),
+      ),
     ),
   );
 }

@@ -3,6 +3,7 @@
 /**
  * Implements hook_preprocess_HOOK().
  */
+/*
 function kore_preprocess_kitem(&$vars) {
   $id = $vars['type'];
   if ($id == 'default') {
@@ -16,10 +17,12 @@ function kore_preprocess_kitem(&$vars) {
 
   kitem_plugin_attach($id);
 }
+*/
 
 /**
  * Implements hook_process_HOOK().
  */
+/*
 function kore_process_kitem(&$vars) {
   if ($vars['type'] == 'default') {
     return;
@@ -28,6 +31,46 @@ function kore_process_kitem(&$vars) {
   if ($callback) {
     $callback($vars);
   }
+}
+*/
+
+function kitem_theme_registry($existing, $type, $theme, $path) {
+  $kitems = kitem_plugin_get_plugins();
+  $kitems_registry = array();
+  foreach ($kitems as $id => $plugin) {
+    $kitems_registry['kitem__' . $id] = array(
+      'base hook' => 'kitem',
+      'path' => $plugin['path'],
+      'template' => $id,
+    );
+    // @todo Support function callback to get subtypes (Maybe).
+    if (!empty($plugin['subtypes']) && is_array($plugin['subtypes'])) {
+      foreach ($plugin['subtypes'] as $subtype => $subtype_info) {
+        $kitems_registry['kitem__' . $id . '__' . $subtype] = array(
+          'base hook' => 'kitem',
+          'path' => $plugin['path'],
+          'template' => $id . '-' . strtr($subtype, '_', '-'),
+        );
+      }
+    }
+  }
+
+  return $kitems_registry;
+}
+
+/**
+ * Wrapper for theme() to use the correct hook.
+ */
+function kitem_theme(&$vars) {
+  $hook = 'kitem';
+  if (!empty($vars['type']) && $vars['type'] != 'default') {
+    $hook .= '__' . $vars['type'];
+    if (!empty($vars['subtype'])) {
+      $hook .= '__' . $vars['subtype'];
+    }
+  }
+
+  return theme($hook, $vars);
 }
 
 // =============================================================================
@@ -61,6 +104,16 @@ function kitem_plugin_get_function($id, $callback) {
   return $function;
 }
 
+function kitem_plugin_get_subtype_function($type, $subtype, $callback) {
+  $plugin = ctools_get_plugins('kore', 'kitem', $type);
+  $function = $plugin['module'] . '_kitem_' . $type . '_' . $subtype . '_' . str_replace(' ', '_', $callback);
+  if (function_exists($function)) {
+    return $function;
+  }
+
+  return FALSE;
+}
+
 /**
  * Attach css, js, etc.
  */
@@ -74,4 +127,19 @@ function kitem_plugin_attach($id) {
   if (isset($plugin['js'])) {
     drupal_add_js($plugin['path'] . '/' . $plugin['js']);
   }
+}
+
+// =============================================================================
+// Utility
+
+function kitem_list_options() {
+  $plugins = kitem_plugin_get_plugins();
+  $options = array(
+    'default' => 'default',
+  );
+  foreach ($plugins as $id => $plugin) {
+    $options[$id] = $id;
+  }
+
+  return $options;
 }
