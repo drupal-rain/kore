@@ -69,7 +69,7 @@ function kore_image_settings_form($id, $prefix, $settings) {
   );
 
   $image_styles = image_style_options(FALSE);
-  $image_styles_options = array('none' => t('<None>'), 'picture' => t('<Picture>')) + $image_styles;
+  $image_styles_options = array('none' => t('<< None >>'), 'picture' => t('<< Picture >>')) + $image_styles;
   $form['image_style'] = array(
     '#type' => 'select',
     '#title' => t('Image Style'),

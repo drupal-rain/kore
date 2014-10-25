@@ -63,14 +63,17 @@ function kitem_theme_registry($existing, $type, $theme, $path) {
  */
 function kitem_theme(&$vars) {
   $hook = 'kitem';
+  $hooks = array($hook);
   if (!empty($vars['type']) && $vars['type'] != 'default') {
     $hook .= '__' . $vars['type'];
+    array_unshift($hooks, $hook);
     if (!empty($vars['subtype'])) {
       $hook .= '__' . $vars['subtype'];
+      array_unshift($hooks, $hook);
     }
   }
 
-  return theme($hook, $vars);
+  return theme($hooks, $vars);
 }
 
 // =============================================================================
