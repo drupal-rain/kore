@@ -54,6 +54,7 @@ function kore_theme($existing, $type, $theme, $path) {
         'style_name' => NULL,
         'link' => NULL,
         'picture' => NULL,
+        'responsive' => TRUE,
       ),
       'file' => 'theme/kore_image.inc',
     ),

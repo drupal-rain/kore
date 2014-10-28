@@ -2,10 +2,10 @@
   <section class="section">
     <div class="container">
       <div class="row">
-        <div class="col-md-<?php print kore_grid_size(KORE_GRID_FULL); ?>">
+        <div class="col-md-<?php print kore_grid_size(KORE_GRID_FULL); ?> chaos-row-region">
           <?php print $content['row']; ?>
         </div>
       </div>
-    </div><!-- /.container -->
-  </section><!--  /.section -->
-</div><!-- /.chaos -->
+    </div>
+  </section>
+</div>
