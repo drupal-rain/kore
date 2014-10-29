@@ -2,10 +2,10 @@
   <section class="section">
     <div class="container">
       <div class="row">
-        <div class="col-md-<?php print kore_grid_size(KORE_GRID_FIFTH * 4); ?> phanes-col1-region">
+        <div class="col-md-<?php print kore_grid_size(KORE_GRID_SIXTH * 5); ?> phanes-col1-region">
           <?php print $content['col1']; ?>
         </div>
-        <div class="col-md-<?php print kore_grid_size(KORE_GRID_FIFTH); ?> phanes-col2-region">
+        <div class="col-md-<?php print kore_grid_size(KORE_GRID_SIXTH); ?> phanes-col2-region">
           <?php print $content['col2']; ?>
         </div>
       </div>

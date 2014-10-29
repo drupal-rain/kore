@@ -20,7 +20,7 @@ Panels Layouts
 * gaia 3/4, 1/4
     - gaia_a
     - gaia_b
-* phanes 4/5, 1/5
+* phanes 5/6, 1/6
 * poseidon 1/3, 1/3, 1/3
 * zeus 2/3, 1/3
 
