@@ -34,3 +34,9 @@ Kitem
 =====
 Plugins for theme_registry kitem.
 Support subtypes.
+    $vars = array(
+      'type' => '',
+      'item' => $item,
+      'settings' => $settings,
+    );
+Usage: kitem_theme($vars);
