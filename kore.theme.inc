@@ -91,6 +91,28 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/kore_carousel.inc',
     ),
+    'datetime_ago' => array(
+      'variables' => array(
+        'timestamp' => 0,
+        'end' => '864000', // In seconds
+        'type' => 'medium', // Display format without 'ago' tweak
+        'format' => '', // will be used if 'type' is 'custom'
+        'attributes' => array(),
+      ),
+      'file' => 'theme/datetime_ago.inc',
+    ),
+    'dropdown' => array(
+      'variables' => array(
+        'id' => NULL, // Set a custom id if needed, or it would automatically generate one.
+        'trigger' => NULL, // @required Text
+        'options' => array(),
+        'attributes' => array(), // For trigger <a>
+        'type' => 'content', // 'links', 'list', 'content', 'custom'
+        'content' => NULL,
+        'content_attributes' => array(), // Not for 'custom'
+      ),
+      'file' => 'theme/dropdown.inc',
+    ),
   );
 }
 
@@ -98,21 +120,42 @@ function kore_theme($existing, $type, $theme, $path) {
 // Theme Registry
 
 /**
- *  Implements hook_preprocess().
+ * Implements hook_preprocess_HOOK().
  */
-function kore_preprocess_page(&$vars) {
-  if (!isset($vars['node'])) {
+function kore_preprocess_page(&$variables) {
+  if (!isset($variables['node'])) {
     $menu_item = menu_get_item();
     // Do favor for page manager pages to add node object.
     if (strpos($menu_item['path'], 'node/%') !== FALSE) {
-      $vars['node'] = node_load(arg(1));
+      $variables['node'] = node_load(arg(1));
     }
   }
   // Add node type specific template.
-  if (isset($vars['node'])) {
-    $vars['theme_hook_suggestions'][] = 'page__node__' . $vars['node']->type;
+  if (isset($variables['node'])) {
+    $variables['theme_hook_suggestions'][] = 'page__node__' . $variables['node']->type;
   }
 }
+
+function kore_preprocess_node(&$variables) {
+  // Insert into 'node__[Bundle]__[View Mode]' just after 'node__[Bundle]'.
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+  $index = array_search('node__' . $node->type, $variables['theme_hook_suggestions']);
+  array_splice($variables['theme_hook_suggestions'], $index + 1, 0, 'node__' . $node->type . '__' . $view_mode);
+}
+
+/*
+function kore_preprocess_field(&$vars) {
+  $element = $vars['element'];
+  // Add useful 'theme_hook_suggestions' to field.
+  $vars['theme_hook_suggestions'][] = 'field__' . $element['#field_name'] . '__' . $element['#entity_type'];
+  $vars['theme_hook_suggestions'][] = 'field__' . $element['#field_name'] . '__' . $element['#entity_type'] . '__' . $element['#bundle'];
+  $vars['theme_hook_suggestions'][] = 'field__' . $element['#field_name'] . '__' . $element['#entity_type'] . '__' . $element['#bundle'] . '__' . $element['#view_mode'];
+  if (isset($element['#formatter'])) {
+    $vars['theme_hook_suggestions'][] = 'field__' . $element['#field_name'] . '__' . $element['#formatter'];
+  }
+}
+*/
 
 // =============================================================================
 // Utility
