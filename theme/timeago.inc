@@ -3,11 +3,11 @@
 /**
  * Theme function for 'datetime_ago'.
 */
-function theme_datetime_ago($vars) {
+function theme_timeago($vars) {
   libraries_load('moment');
-  ctools_add_js('datetime_ago', 'kore');
+  ctools_add_js('timeago', 'kore');
   $data = 'timestamp:' . $vars['timestamp'] . '; end:' . $vars['end'];
-  $vars['attributes']['class'][] = 'datetime-ago';
+  $vars['attributes']['class'][] = 'timeago';
 
   $output = '<span' . drupal_attributes($vars['attributes']) . ' data-moment data-options="' . $data . '">';
   $output .= format_date($vars['timestamp'], $vars['type'], $vars['format']);

@@ -41,6 +41,78 @@ function kore_theme($existing, $type, $theme, $path) {
       'file' => 'theme/klist.inc',
       'template' => 'theme/klist',
     ),
+    // HTML components
+    'html_list' => array(
+      'variables' => array(
+        'type' => 'ul', // ul, ol, dl
+        'attributes' => array(),
+        'items' => array(),
+        'no_wrapper' => FALSE, // If TRUE, only return <li> items.
+      ),
+      'file' => 'theme/html_list.inc',
+    ),
+    // Datetime
+    'timeago' => array( // Use moment.js
+      'variables' => array(
+        'timestamp' => 0,
+        'end' => '864000', // In seconds
+        'type' => 'medium', // System datetime format.
+        'format' => '', // PHP format, will be used if 'type' is 'custom'.
+        'attributes' => array(),
+      ),
+      'file' => 'theme/timeago.inc',
+    ),
+    // Media
+    'img' => array(
+      'variables' => array(
+        'file' => NULL, // fid or file object
+        'type' => 'image', // image, image_style, picture
+        'attributes' => array(), // Need to give individual 'alt', 'title'?
+        'style_name' => NULL,
+        'link' => NULL,
+        'picture' => NULL,
+        'responsive' => TRUE,
+      ),
+      'file' => 'theme/img.inc',
+    ),
+    'carousel' => array( // Use owl.carousel.js
+      'variables' => array(
+        'items' => array(),
+        'type' => 'owlcarousel',
+        'settings' => array(),
+        'id' => NULL, // HTML id, if not input, it would generate a unique one
+        'attributes' => array(),
+
+        'instance' => NULL, // For owlcaoursel preset instance
+        'style' => NULL, // Add-on styles, string or array
+      ),
+      'file' => 'theme/carousel.inc',
+    ),
+    // Foundation components
+    'dropdown' => array(
+      'variables' => array(
+        'id' => NULL, // Set a custom id if needed, or it would automatically generate one.
+        'trigger' => NULL, // @required Text
+        'options' => array(),
+        'attributes' => array(), // For trigger <a>
+        'type' => 'content', // 'links', 'list', 'content', 'custom'
+        'content' => NULL,
+        'content_attributes' => array(), // Not for 'custom'
+      ),
+      'file' => 'theme/dropdown.inc',
+    ),
+    'blockgrid' => array(
+      'variables' => array(
+        'per_row' => 3, // Can be a number or an array
+        'items' => array(),
+        'attributes' => array(),
+      ),
+      'file' => 'theme/blockgrid.inc',
+    ),
+    // @todo price_table
+
+    // =====================
+    // @deprecated in favor of file_image
     'kore_image' => array(
       'variables' => array(
         'type' => 'image',
@@ -58,6 +130,25 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/kore_image.inc',
     ),
+    // @deprecated Bootstrap Thumbnail
+    'kore_thumbnail' => array(
+      'variables' => array(
+        'items' => array(),
+        'settings' => array(),
+      ),
+      'file' => 'theme/kore_thumbnail.inc',
+      'template' => 'theme/kore_thumbnail', // @todo Transfer to theme function, Again???
+    ),
+    // @deprecated Bootstrap Media
+    'kore_media' => array(
+      'variables' => array(
+        'items' => array(),
+        'settings' => array(),
+        'attributes' => array(),
+      ),
+      'file' => 'theme/kore_media.inc',
+    ),
+    // @deprecated Bootstrap list-group
     'kore_list_group' => array(
       'variables' => array(
         'label' => NULL,
@@ -67,22 +158,7 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/kore_list_group.inc',
     ),
-    'kore_media' => array(
-      'variables' => array(
-        'items' => array(),
-        'settings' => array(),
-        'attributes' => array(),
-      ),
-      'file' => 'theme/kore_media.inc',
-    ),
-    'kore_thumbnail' => array(
-      'variables' => array(
-        'items' => array(),
-        'settings' => array(),
-      ),
-      'file' => 'theme/kore_thumbnail.inc',
-      'template' => 'theme/kore_thumbnail', // @todo Transfer to theme function, Again???
-    ),
+    // @deprecated in favor of carousel
     'kore_carousel' => array(
       'variables' => array(
         'items' => array(),
@@ -90,28 +166,6 @@ function kore_theme($existing, $type, $theme, $path) {
         'attributes' => array(),
       ),
       'file' => 'theme/kore_carousel.inc',
-    ),
-    'datetime_ago' => array(
-      'variables' => array(
-        'timestamp' => 0,
-        'end' => '864000', // In seconds
-        'type' => 'medium', // Display format without 'ago' tweak
-        'format' => '', // will be used if 'type' is 'custom'
-        'attributes' => array(),
-      ),
-      'file' => 'theme/datetime_ago.inc',
-    ),
-    'dropdown' => array(
-      'variables' => array(
-        'id' => NULL, // Set a custom id if needed, or it would automatically generate one.
-        'trigger' => NULL, // @required Text
-        'options' => array(),
-        'attributes' => array(), // For trigger <a>
-        'type' => 'content', // 'links', 'list', 'content', 'custom'
-        'content' => NULL,
-        'content_attributes' => array(), // Not for 'custom'
-      ),
-      'file' => 'theme/dropdown.inc',
     ),
   );
 }

@@ -2,6 +2,7 @@
 
 include_once 'kore.features.inc';
 
+require_once 'kore.field.inc';
 require_once 'kore.node.inc';
 require_once 'kore.form.inc';
 require_once 'kore.theme.inc';
@@ -53,7 +54,60 @@ function kore_ctools_plugin_directory($owner, $plugin_type) {
 function kore_views_api() {
   return array(
     'api' => 3,
-    'path' => drupal_get_path('module', 'kore') . '/views',
-    'template path' => drupal_get_path('module', 'kore') . '/views/themes',
+    //'path' => drupal_get_path('module', 'kore') . '/views',
+    //'template path' => drupal_get_path('module', 'kore') . '/views/theme',
   );
+}
+
+/**
+ *
+ */
+function kore_foundation_sizes() {
+  return array(
+    'small',
+    'medium',
+    'large',
+    'xlarge',
+    'xxlarge',
+  );
+}
+
+/**
+ * Invoke the same static method of all component classes.
+ */
+function kore_invoke_all($component, $hook) {
+  $args = func_get_args();
+  unset($args[0], $args[1]);
+  $return = array();
+  $classes = \Drupal\kore\Loader::mapImplementationsAvailable($component, "\\Drupal\\kore\\$component\\$component");
+  foreach ($classes as $class) {
+    $result = call_user_func(array($class, $hook), $args);
+    if (isset($result) && is_array($result)) {
+      $return = array_merge_recursive($return, $result);
+    }
+    elseif (isset($result)) {
+      $return[] = $result;
+    }
+  }
+
+  return $return;
+}
+
+/**
+ * Center function to hold the classes with cache.
+ */
+function kore_component_get_classes($component) {
+  $classes = &drupal_static(__FUNCTION__, array());
+  if (!isset($classes[$component])) {
+    $classes[$component] = \Drupal\kore\Loader::mapImplementationsAvailable($component, "\\Drupal\\kore\\$component\\$component");
+  }
+  return $classes[$component];
+}
+
+/**
+ * Get class of the specific component type.
+ */
+function kore_component_get_class($component, $type) {
+  $classes = kore_component_get_classes($component);
+  return $classes[$type];
 }

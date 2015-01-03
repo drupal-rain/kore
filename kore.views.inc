@@ -39,3 +39,28 @@ function kore_views_data_alter(&$data) {
     }
   }
 }
+
+/**
+ * Implements hook_views_plugins().
+ */
+function kore_views_plugins() {
+  return array(
+    'style' => array(
+      'blockgrid' => array(
+        'title'           => t('Block Grid'),
+        'help'            => t('Foundation block grid style'),
+        'handler'         => 'views_plugin_style_blockgrid',
+        'parent'          => 'default',
+        'theme'           => 'views_view_blockgrid',
+        'theme path'      => drupal_get_path('module', 'kore') . '/views/theme',
+        'theme file'      => 'views_view_blockgrid.inc',
+        'uses fields'     => FALSE,
+        'uses row plugin' => TRUE,
+        'use row class'   => TRUE,
+        'uses grouping'   => FALSE,
+        'uses options'    => TRUE,
+        'type'            => 'normal',
+      ),
+    ),
+  );
+}

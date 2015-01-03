@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * $variables
+ *   - id
+ *   - trigger
+ *   - options
+ *     data-options
+ *   - attributes
+ *   - type
+ *     * links
+ *     * content
+ *     * custom
+ *   - content
+ *   - content_attributes
+ */
 function theme_dropdown($vars) {
   // Trigger
   $id = isset($vars['id']) ? $vars['id'] : 'dropdown';
@@ -48,9 +62,8 @@ function theme_dropdown($vars) {
       $output .= $vars['content'];
       $output .= '</div>';
       break;
-    case 'list':
-      break;
     case 'custom':
+      $output .= $vars['content'];
       break;
   }
 
