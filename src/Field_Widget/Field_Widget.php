@@ -11,10 +11,19 @@ namespace Drupal\kore\Field_Widget;
 
 interface Field_Widget {
 
+  /**
+   * hook_field_widget_info().
+   */
   public static function info();
 
+  /**
+   * hook_field_widget_settings_form().
+   */
   public static function settings_form($field, $instance);
 
+  /**
+   * hook_field_widget_form().
+   */
   public static function form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element);
 
 }

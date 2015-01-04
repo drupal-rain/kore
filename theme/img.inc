@@ -75,20 +75,7 @@ $vars = array(
 function theme_img($vars) {
   $output = NULL;
 
-  /*
-  $type = $vars['type'];
-  switch ($type) {
-    case 'image':
-      $output = theme('image', $vars);
-      break;
-    case 'image_style':
-      $output = theme('image_style', $vars);
-      break;
-    case 'picture':
-      $output = theme('picture', $vars);
-      break;
-  }
-  */
+  // $vars['type'] is another real theme registry.
   $output = theme($vars['type'], $vars);
 
   // Wrap it with link.
@@ -142,29 +129,5 @@ function template_preprocess_img(&$vars) {
   // Responsive
   if ($vars['responsive']) {
     $vars['attributes']['class'] = 'img-responsive'; // @todo Steal it from Bootstrap
-  }
-}
-
-/**
- * Implements hook_preprocess_REGISTRY() for 'image'.
- */
-function kore_preprocess_image(&$vars) {
-  // Prepare needed variables by input file object.
-  if (isset($vars['file']) && is_object($vars['file'])) {
-    $vars['path'] = ($vars['path'] == NULL) ? $vars['file']->uri : $vars['path'];
-    $vars['alt'] = ($vars['alt'] == NULL) ? $vars['file']->alt : $vars['alt'];
-    $vars['title'] = ($vars['title'] == NULL) ? $vars['file']->title : $vars['title'];
-  }
-}
-
-/**
- * Implements hook_preprocess_REGISTRY() for 'image_style'.
- */
-function kore_preprocess_image_style(&$vars) {
-  // Prepare needed variables by input file object.
-  if (isset($vars['file']) && is_object($vars['file'])) {
-    $vars['path'] = ($vars['path'] == NULL) ? $vars['file']->uri : $vars['path'];
-    $vars['alt'] = ($vars['alt'] == NULL) ? $vars['file']->alt : $vars['alt'];
-    $vars['title'] = ($vars['title'] == NULL) ? $vars['file']->title : $vars['title'];
   }
 }

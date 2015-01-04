@@ -82,7 +82,6 @@ function kore_theme($existing, $type, $theme, $path) {
         'settings' => array(),
         'id' => NULL, // HTML id, if not input, it would generate a unique one
         'attributes' => array(),
-
         'instance' => NULL, // For owlcaoursel preset instance
         'style' => NULL, // Add-on styles, string or array
       ),
@@ -171,7 +170,7 @@ function kore_theme($existing, $type, $theme, $path) {
 }
 
 // =============================================================================
-// Theme Registry
+// Preprocess
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -210,6 +209,25 @@ function kore_preprocess_field(&$vars) {
   }
 }
 */
+
+/**
+ * Implements hook_preprocess_REGISTRY() for 'image'.
+ */
+function kore_preprocess_image(&$vars) {
+  // Prepare needed variables by input file object.
+  if (isset($vars['file']) && is_object($vars['file'])) {
+    $vars['path'] = ($vars['path'] == NULL) ? $vars['file']->uri : $vars['path'];
+    $vars['alt'] = ($vars['alt'] == NULL) ? $vars['file']->alt : $vars['alt'];
+    $vars['title'] = ($vars['title'] == NULL) ? $vars['file']->title : $vars['title'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_REGISTRY() for 'image_style'.
+ */
+function kore_preprocess_image_style(&$vars) {
+  kore_preprocess_image($vars);
+}
 
 // =============================================================================
 // Utility

@@ -31,6 +31,10 @@ abstract class Field_Abscract implements Field {
     return array();
   }
 
+  public static function hook_field_instance_settings_form($field, $instance) {
+    return array();
+  }
+
   public static function is_empty($item, $field) {
     if (isset($item['value'])) {
       return TRUE;

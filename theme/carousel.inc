@@ -11,12 +11,12 @@
  *   - settings
  */
 function theme_carousel(&$vars) {
-  $html_id = isset($vars['id']) ? drupal_html_id($vars['id']) : drupal_html_id('carousel');
+  $html_id = !empty($vars['id']) ? drupal_html_id($vars['id']) : drupal_html_id('carousel');
   $output = '';
   $settings = $vars['settings'];
 
   // Use theme_owlcarousel
-  if ($vars['type'] == 'owlcarousel' && isset($settings['instance'])) {
+  if ($vars['type'] == 'owlcarousel' && isset($vars['instance'])) {
     // Prepare items and settings.
     $items = array();
     foreach ($vars['items'] as $i => $item) {
@@ -25,7 +25,7 @@ function theme_carousel(&$vars) {
     $variables = array(
       'items' => $items,
       'settings' => array(
-        'instance' => $settings['instance'],
+        'instance' => $vars['instance'],
         'attributes' => array(
           'id' => array('default' => $html_id),
         ),
@@ -33,7 +33,7 @@ function theme_carousel(&$vars) {
     );
 
     // Add-on Style
-    if ($settings['style']) {
+    if (isset($settings['style'])) {
       if (is_array($settings['style'])) {
         $class = '';
         $i = 0;

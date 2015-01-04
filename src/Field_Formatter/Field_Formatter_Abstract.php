@@ -14,11 +14,12 @@ abstract class Field_Formatter_Abstract implements Field_Formatter {
   }
 
   public static function settings_form($field, $instance, $view_mode, $form, &$form_state) {
-    return $form;
+    return array();
   }
 
   public static function settings_summary($field, $instance, $view_mode) {
-    return NULL;
+    // At least return empty string to make the settings editable.
+    return ' ';
   }
 
   public static function prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays) {
