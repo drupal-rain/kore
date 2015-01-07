@@ -31,7 +31,7 @@ abstract class Field_Abscract implements Field {
     return array();
   }
 
-  public static function hook_field_instance_settings_form($field, $instance) {
+  public static function instance_settings_form($field, $instance) {
     return array();
   }
 
@@ -40,6 +40,9 @@ abstract class Field_Abscract implements Field {
       return TRUE;
     }
     return FALSE;
+  }
+
+  public static function storage_update_field($field, $prior_field, $has_data) {
   }
 
 }

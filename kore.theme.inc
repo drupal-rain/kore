@@ -90,11 +90,11 @@ function kore_theme($existing, $type, $theme, $path) {
     // Foundation components
     'dropdown' => array(
       'variables' => array(
-        'id' => NULL, // Set a custom id if needed, or it would automatically generate one.
-        'trigger' => NULL, // @required Text
-        'options' => array(),
+        'id' => NULL, // Set a custom id if needed, or it would automatically generate one. For 'data-dropdown' and content html id.
+        'trigger' => NULL, // @required The trigger <a>
+        'options' => array(),  // Array to generate data-options attribute value
         'attributes' => array(), // For trigger <a>
-        'type' => 'content', // 'links', 'list', 'content', 'custom'
+        'type' => 'content', // 'links', 'content', 'custom'
         'content' => NULL,
         'content_attributes' => array(), // Not for 'custom'
       ),
@@ -173,23 +173,30 @@ function kore_theme($existing, $type, $theme, $path) {
 // Preprocess
 
 /**
- * Implements hook_preprocess_HOOK().
+ * Implements hook_preprocess_HOOK() for 'page'.
  */
-function kore_preprocess_page(&$variables) {
-  if (!isset($variables['node'])) {
+function kore_preprocess_page(&$vars) {
+  // Try to fetch the node object.
+  if (!isset($vars['node'])) {
     $menu_item = menu_get_item();
     // Do favor for page manager pages to add node object.
     if (strpos($menu_item['path'], 'node/%') !== FALSE) {
-      $variables['node'] = node_load(arg(1));
+      $vars['node'] = node_load(arg(1));
     }
   }
+
+  // Node page only:
   // Add node type specific template.
-  if (isset($variables['node'])) {
-    $variables['theme_hook_suggestions'][] = 'page__node__' . $variables['node']->type;
+  if (isset($vars['node'])) {
+    $vars['theme_hook_suggestions'][] = 'page__node__' . $vars['node']->type;
   }
 }
 
+/**
+ * Implements hook_preprocess_HOOK() for 'node'.
+ */
 function kore_preprocess_node(&$variables) {
+  // Add in some useful theme_hook_suggestions.
   // Insert into 'node__[Bundle]__[View Mode]' just after 'node__[Bundle]'.
   $node = $variables['node'];
   $view_mode = $variables['view_mode'];
@@ -230,6 +237,9 @@ function kore_preprocess_image_style(&$vars) {
 }
 
 // =============================================================================
+// Overload
+
+// =============================================================================
 // Utility
 
 /**
@@ -242,6 +252,14 @@ function kore_attributes_process(&$vars, $attributes) {
       $vars[$index] = array_merge($vars[$index], $attributes[$index]);
     }
   }
+}
+
+/**
+ * A shortcut for theme_get_registry().
+ */
+function kore_theme_get_registry($name) {
+  $registry = theme_get_registry();
+  return $registry[$name];
 }
 
 /**

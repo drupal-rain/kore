@@ -59,11 +59,11 @@ function theme_dropdown($vars) {
     case 'content':
       $vars['content_attributes']['class'][] = 'content';
       $output .= '<div' . drupal_attributes($vars['content_attributes']) . '>';
-      $output .= $vars['content'];
+      $output .= drupal_render($vars['content']);
       $output .= '</div>';
       break;
     case 'custom':
-      $output .= $vars['content'];
+      $output .= drupal_render($vars['content']);
       break;
   }
 

@@ -55,4 +55,5 @@ features[variable][] = date_format_short
 features[variable][] = date_format_year_month
 features[variable][] = date_format_year_month_day
 
+files[] = includes/ArchiverZipFile.inc
 files[] = views/views_plugin_style_blockgrid.inc

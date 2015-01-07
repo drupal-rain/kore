@@ -14,7 +14,7 @@ abstract class Field_Formatter_Abstract implements Field_Formatter {
   }
 
   public static function settings_form($field, $instance, $view_mode, $form, &$form_state) {
-    return array();
+    return NULL;
   }
 
   public static function settings_summary($field, $instance, $view_mode) {
@@ -26,7 +26,7 @@ abstract class Field_Formatter_Abstract implements Field_Formatter {
   }
 
   public static function view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-    return array();
+    return NULL;
   }
 
 }

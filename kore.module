@@ -2,6 +2,7 @@
 
 include_once 'kore.features.inc';
 
+require_once 'kore.menu.inc';
 require_once 'kore.field.inc';
 require_once 'kore.node.inc';
 require_once 'kore.form.inc';
@@ -12,6 +13,9 @@ require_once 'kore.kdata.inc';
 
 require_once 'kore.kitem.inc';
 require_once 'kore.klist.inc';
+
+// Kore Component Utility
+require_once 'kore.component.inc';
 
 /**
  * Wrapper for ctools_include().
@@ -60,6 +64,14 @@ function kore_views_api() {
 }
 
 /**
+ * Implements hook_archiver_info_alter().
+ */
+function kore_archiver_info_alter(&$info) {
+  // Use a more robust one.
+  $info['zip']['class'] = 'ArchiverZipFile';
+}
+
+/**
  *
  */
 function kore_foundation_sizes() {
@@ -70,44 +82,4 @@ function kore_foundation_sizes() {
     'xlarge',
     'xxlarge',
   );
-}
-
-/**
- * Invoke the same static method of all component classes.
- */
-function kore_invoke_all($component, $hook) {
-  $args = func_get_args();
-  unset($args[0], $args[1]);
-  $return = array();
-  $classes = \Drupal\kore\Loader::mapImplementationsAvailable($component, "\\Drupal\\kore\\$component\\$component");
-  foreach ($classes as $class) {
-    $result = call_user_func(array($class, $hook), $args);
-    if (isset($result) && is_array($result)) {
-      $return = array_merge_recursive($return, $result);
-    }
-    elseif (isset($result)) {
-      $return[] = $result;
-    }
-  }
-
-  return $return;
-}
-
-/**
- * Center function to hold the classes with cache.
- */
-function kore_component_get_classes($component) {
-  $classes = &drupal_static(__FUNCTION__, array());
-  if (!isset($classes[$component])) {
-    $classes[$component] = \Drupal\kore\Loader::mapImplementationsAvailable($component, "\\Drupal\\kore\\$component\\$component");
-  }
-  return $classes[$component];
-}
-
-/**
- * Get class of the specific component type.
- */
-function kore_component_get_class($component, $type) {
-  $classes = kore_component_get_classes($component);
-  return $classes[$type];
 }
