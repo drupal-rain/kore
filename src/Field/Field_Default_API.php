@@ -1,10 +1,10 @@
 <?php
+
 /**
  * @file
  */
 
 namespace Drupal\kore\Field;
-
 
 // As documentation only.
 // @see _field_invoke().
@@ -12,7 +12,7 @@ namespace Drupal\kore\Field;
 // @doc http://drupal7.api/api/drupal/7.x/search/hook_field_attach
 // @todo Consider field_attach_* hooks implementation
 // Even these hooks are only for the field type module, because all the fields are in 'kore' realm, widget, formatter, can also invoke.
-interface Field_Attach_API {
+interface Field_Default_API {
 
   // @doc http://drupal7.api/api/drupal/modules%21field%21field.api.php/function/hook_field_load/7.x
   // Pay attention to performance issue, so not for Field_Widget
