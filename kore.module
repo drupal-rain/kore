@@ -1,9 +1,12 @@
 <?php
 
+include_once 'kore.system.inc';
+
 include_once 'kore.features.inc';
 
 require_once 'kore.menu.inc';
 require_once 'kore.field.inc';
+require_once 'kore.entity.inc';
 require_once 'kore.node.inc';
 require_once 'kore.form.inc';
 require_once 'kore.theme.inc';

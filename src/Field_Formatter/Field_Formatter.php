@@ -27,11 +27,15 @@ interface Field_Formatter {
 
   /**
    * hook_field_formatter_prepare_view().
+   *
+   * Concentrate on add/modify data in $items.
    */
   public static function prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays);
 
   /**
    * hook_field_formatter_view().
+   *
+   * Either return an element #markup or a theme registry.
    */
   public static function view($entity_type, $entity, $field, $instance, $langcode, $items, $display);
 

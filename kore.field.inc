@@ -105,7 +105,6 @@ function kore_field_formatter_settings_summary($field, $instance, $view_mode) {
   return $class::settings_summary($field, $instance, $view_mode);
 }
 
-
 // -----------------------------------------------------------------------------
 // Field Attach API, Optional
 
@@ -179,4 +178,54 @@ function kore_field_prepare_view($entity_type, $entities, $field, $instances, $l
 function kore_field_prepare_translation($entity_type, $entity, $field, $instance, $langcode, &$items, $source_entity, $source_langcode) {
   $func = kore_component_func('Field', $field['type'], 'prepare_translation');
   if ($func) call_user_func_array($func, array($entity_type, $entity, $field, $instance, $langcode, &$items, $source_entity, $source_langcode));
+}
+
+// -----------------------------------------------------------------------------
+// Field Extra Fields
+
+/**
+ * @Implements hook_field_extra_fields().
+ */
+function kore_field_extra_fields() {
+  $fields = array();
+  $info = entity_get_info();
+  foreach ($info as $entity_type => $info_entity_type) {
+    foreach ($info_entity_type['bundles'] as $bundle => $info_bundle) {
+      $classes['form'] = kore_component_entity_get_classes('Field_Form', $entity_type, $bundle);
+      $classes['display'] = kore_component_entity_get_classes('Field_Display', $entity_type, $bundle);
+      $fields[$entity_type][$bundle]['form'] = kore_component_classes_invoke($classes['form'], 'info');
+      $fields[$entity_type][$bundle]['display'] = kore_component_classes_invoke($classes['display'], 'info');
+    }
+  }
+
+  return $fields;
+}
+
+/**
+ * @Implements hook_field_attach_view_alter().
+ *
+ * @consider Would this cost much resource and cause performance issue?
+ */
+function kore_field_attach_view_alter(&$output, $context) {
+  // Ignore '_custom' call in field_view_field() which only for real field type.
+  if ($context['view_mode'] == '_custom') {
+    return;
+  }
+
+  list($id, $vid, $bundle) = entity_extract_ids($context['entity_type'], $context['entity']);
+  $classes = kore_component_entity_get_classes('Field_Display', $context['entity_type'], $bundle);
+  foreach ($classes as $type => $class) {
+    $class::view_alter($output, $context);
+  }
+}
+
+/**
+ * @Implements hook_field_attach_form().
+ */
+function kore_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+  $classes = kore_component_entity_get_classes('Field_Form', $entity_type, $bundle);
+  foreach ($classes as $type => $class) {
+    $class::form($entity_type, $entity, $form, $form_state, $langcode);
+  }
 }

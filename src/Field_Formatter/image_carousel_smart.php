@@ -1,9 +1,13 @@
 <?php
 
 /**
- * @file
+ * @file A field formatter for image field.
+ *
+ * There are three ways of output:
+ *   - If there is no file, print none.
+ *   - If there is a single image, just print it.
+ *   - If more than one image, initiate a carousel.
  */
-
 
 namespace Drupal\kore\Field_Formatter;
 

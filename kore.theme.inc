@@ -1,5 +1,6 @@
 <?php
 
+// @deprecated or Convert to Foundation
 // Grid size constants
 define('KORE_GRID_SIZE', 12);
 define('KORE_GRID_FULL', 1);
@@ -41,7 +42,10 @@ function kore_theme($existing, $type, $theme, $path) {
       'file' => 'theme/klist.inc',
       'template' => 'theme/klist',
     ),
+
+    // -------------------------------------------------------------------------
     // HTML components
+
     'html_list' => array(
       'variables' => array(
         'type' => 'ul', // ul, ol, dl
@@ -51,8 +55,12 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/html_list.inc',
     ),
-    // Datetime
-    'timeago' => array( // Use moment.js
+
+    // -------------------------------------------------------------------------
+    // Common
+
+    // Datetime, use moment.js, turn recent date text to "* ago" format by js
+    'timeago' => array(
       'variables' => array(
         'timestamp' => 0,
         'end' => '864000', // In seconds
@@ -62,7 +70,8 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/timeago.inc',
     ),
-    // Media
+
+    // Media image, integrate image, image_style, picture
     'img' => array(
       'variables' => array(
         'file' => NULL, // fid or file object
@@ -75,6 +84,8 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/img.inc',
     ),
+
+    // Carousel
     'carousel' => array( // Use owl.carousel.js
       'variables' => array(
         'items' => array(),
@@ -87,7 +98,22 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/carousel.inc',
     ),
+
+    // Theme files array
+    'files' => array(
+      'variables' => array(
+        'files' => array(), // Files fid or object array
+        'link'  => FALSE, // Theme file to link
+        'style' => 'list', // 'list' or 'inline'
+        'settings' => array(), // Meant for style options
+      ),
+      'file' => 'theme/files.inc',
+    ),
+
+    // -------------------------------------------------------------------------
     // Foundation components
+
+    // Foundation dropdown
     'dropdown' => array(
       'variables' => array(
         'id' => NULL, // Set a custom id if needed, or it would automatically generate one. For 'data-dropdown' and content html id.
@@ -100,6 +126,8 @@ function kore_theme($existing, $type, $theme, $path) {
       ),
       'file' => 'theme/dropdown.inc',
     ),
+
+    // Foundation blockgrid
     'blockgrid' => array(
       'variables' => array(
         'per_row' => 3, // Can be a number or an array
@@ -170,7 +198,7 @@ function kore_theme($existing, $type, $theme, $path) {
 }
 
 // =============================================================================
-// Preprocess
+// Core Theme Registries
 
 /**
  * Implements hook_preprocess_HOOK() for 'page'.
@@ -237,9 +265,6 @@ function kore_preprocess_image_style(&$vars) {
 }
 
 // =============================================================================
-// Overload
-
-// =============================================================================
 // Utility
 
 /**
@@ -263,6 +288,8 @@ function kore_theme_get_registry($name) {
 }
 
 /**
+ * @deprecated or convert to Foundation context
+ *
  * Calculates a column number based on columns in the total and current grid.
  *
  * @param int $percentage
