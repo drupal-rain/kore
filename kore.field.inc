@@ -202,6 +202,19 @@ function kore_field_extra_fields() {
 }
 
 /**
+ * @Implements hook_field_attach_load().
+ */
+function kore_field_attach_load($entity_type, $entities, $age, $options) {
+  $info = entity_get_info($entity_type);
+  foreach ($info['bundles'] as $bundle => $bundle_info) {
+    $classes = kore_component_entity_get_classes('Field_Display', $entity_type, $bundle);
+    foreach ($classes as $type => $class) {
+      $class::load($entity_type, $entities, $age, $options);
+    }
+  }
+}
+
+/**
  * @Implements hook_field_attach_view_alter().
  *
  * @consider Would this cost much resource and cause performance issue?

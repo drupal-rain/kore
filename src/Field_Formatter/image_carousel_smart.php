@@ -60,7 +60,7 @@ class image_carousel_smart extends Field_Formatter_Abstract {
 
     // Single image
     if ($size == 1) {
-      $element = Settings\image::buildProduct('image', $settings, array('file' => (object)$items[0]));
+      $element[0] = Settings\image::buildProduct('image', $settings, array('file' => (object)$items[0]));
     }
     // Carousel
     else {
@@ -69,7 +69,7 @@ class image_carousel_smart extends Field_Formatter_Abstract {
         $item_element = Settings\image::buildProduct('image', $settings, array('file' => (object)$item));
         $items_carousel[$delta] = drupal_render($item_element);
       }
-      $element = Settings\carousel::buildProduct('carousel', $settings, array('items' => $items_carousel));
+      $element[0] = Settings\carousel::buildProduct('carousel', $settings, array('items' => $items_carousel));
     }
 
     return $element;

@@ -1,5 +1,4 @@
-
-<div class="panel-display gaia clearfix <?php !empty($class) ? print $class : ''; ?>" <?php !empty($css_id) ? print "id=\"$css_id\"" : ''; ?>>
+<div class="panel-display gaia clearfix" <?php !empty($css_id) ? print "id=\"$css_id\"" : ''; ?>>
   <div class="row">
     <div class="gaia-col1-region medium-9 columns">
       <?php print $content['col1']; ?>

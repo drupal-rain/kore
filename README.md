@@ -19,15 +19,30 @@ Image Styles
 
 Theme
 =====
+* __HTML Components__
 <dl>
   <dt>html_list</dt>
     <dd>Standard HTML list tags.</dd>
+</dl>
+* __Commmon Components__
+<dl>
+  <dt>carousel</dt>
+    <dd>A handy carousel theme.</dd>
+  <dt>files</dt>
+    <dd>Theme files list.</dd>
+  <dt>img</dt>
+    <dd>Integrate image, image_style, picture.</dd>
   <dt>timeago</dt>
     <dd>Use moment.js to transfer datetime to relative 'time ago' format.</dd>
+</dl>
+* __Foundation Components__
+<dl>
+  <dt>blockgrid</dt>
+    <dd>Create blockgrid items list.</dd>
   <dt>dropdown</dt>
-    <dd></dd>
-  <dt>kore_image</dt>
-    <dd></dd>
+    <dd>Create dropdown link/button.</dd>
+  <dt>tooltip</dt>
+    <dd>Cursor hover popup tooltip.</dd>
 </dl>
 
 Panels Layouts

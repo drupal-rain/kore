@@ -113,6 +113,16 @@ function kore_theme($existing, $type, $theme, $path) {
     // -------------------------------------------------------------------------
     // Foundation components
 
+    // Foundation blockgrid
+    'blockgrid' => array(
+      'variables' => array(
+        'per_row' => 3, // Can be a number or an array, array is for media query.
+        'items' => array(),
+        'attributes' => array(),
+      ),
+      'file' => 'theme/blockgrid.inc',
+    ),
+
     // Foundation dropdown
     'dropdown' => array(
       'variables' => array(
@@ -127,16 +137,17 @@ function kore_theme($existing, $type, $theme, $path) {
       'file' => 'theme/dropdown.inc',
     ),
 
-    // Foundation blockgrid
-    'blockgrid' => array(
-      'variables' => array(
-        'per_row' => 3, // Can be a number or an array
-        'items' => array(),
-        'attributes' => array(),
-      ),
-      'file' => 'theme/blockgrid.inc',
-    ),
     // @todo price_table
+
+    // Foundation tooltip
+    'tooltip' => array(
+      'variables' => array(
+        'text' => NULL, // @required
+        'title' => NULL, // @required
+        'classes' => array(), // [tip-top tip-bottom tip-left tip-right] [radius round]
+      ),
+      'file' => 'theme/tooltip.inc',
+    ),
 
     // =====================
     // @deprecated in favor of file_image
