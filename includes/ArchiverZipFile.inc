@@ -13,7 +13,7 @@ class ArchiverZipFile extends ArchiverZip {
       $zip_file_uri = File::getUri($zip_file);
       $zip_file_path = drupal_realpath($zip_file_uri);
       // Zip file exists
-      if (file_exists($zip_file)) {
+      if (file_exists($zip_file_uri)) {
         parent::__construct($zip_file_path);
         $this->zip_file = File::loadByUri($zip_file_uri);
       }
@@ -52,7 +52,7 @@ class ArchiverZipFile extends ArchiverZip {
   /**
    * Wrapper for add().
    *
-   * @param $file
+   * @param $file fid or file object
    * @param $dir Local relative path in zip, '/' would be a folder with the same name, not root.
    */
   public function addFile($file, $dir = '') {
@@ -76,7 +76,8 @@ class ArchiverZipFile extends ArchiverZip {
   public function save($reopen = FALSE) {
     $this->zip->close();
     if ($this->is_new) {
-      $this->zip_file = file_save_data(file_get_contents($this->zip_file->uri), $this->zip_file->uri);
+      // Instead of rename, replace it here.
+      $this->zip_file = file_save_data(file_get_contents($this->zip_file->uri), $this->zip_file->uri, FILE_EXISTS_REPLACE);
       // Saved, so it is not new anymore
       $this->is_new = FALSE;
     }

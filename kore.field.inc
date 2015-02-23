@@ -138,6 +138,8 @@ function kore_field_presave($entity_type, $entity, $field, $instance, $langcode,
 function kore_field_insert($entity_type, $entity, $field, $instance, $langcode, &$items) {
   $func = kore_component_func('Field', $field['type'], 'insert');
   if ($func) call_user_func_array($func, array($entity_type, $entity, $field, $instance, $langcode, &$items));
+  $func = kore_component_func('Field', $field['type'], 'save');
+  if ($func) call_user_func_array($func, array($entity_type, $entity, $field, $instance, $langcode, &$items));
 }
 
 /**
@@ -145,6 +147,8 @@ function kore_field_insert($entity_type, $entity, $field, $instance, $langcode, 
  */
 function kore_field_update($entity_type, $entity, $field, $instance, $langcode, &$items) {
   $func = kore_component_func('Field', $field['type'], 'update');
+  if ($func) call_user_func_array($func, array($entity_type, $entity, $field, $instance, $langcode, &$items));
+  $func = kore_component_func('Field', $field['type'], 'save');
   if ($func) call_user_func_array($func, array($entity_type, $entity, $field, $instance, $langcode, &$items));
 }
 

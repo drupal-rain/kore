@@ -26,6 +26,9 @@ interface Field_Default_API {
 
   public static function update($entity_type, $entity, $field, $instance, $langcode, &$items);
 
+  // Custom, run after both 'insert' and 'update'
+  public static function save($entity_type, $entity, $field, $instance, $langcode, &$items);
+
   public static function delete($entity_type, $entity, $field, $instance, $langcode, &$items);
 
   public static function delete_revision($entity_type, $entity, $field, $instance, $langcode, &$items);
